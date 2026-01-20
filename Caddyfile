@@ -1,0 +1,33 @@
+yourdomain.com {
+    # Serve Frontend Static Files
+    root * /var/www/url-shortener/frontend/dist
+    
+    # Enable compression
+    encode gzip
+
+    # Handle the root path explicitly to serve index.html
+    handle / {
+        file_server
+        try_files /index.html
+    }
+
+    # Handle assets (JS/CSS)
+    handle /assets/* {
+        file_server
+    }
+
+    # Handle favicon and other static files if present
+    handle /vite.svg {
+        file_server
+    }
+
+    # Proxy everything else to Backend (API and Short Codes)
+    handle /* {
+        reverse_proxy localhost:3000
+    }
+
+    # Logging
+    log {
+        output file /var/log/caddy/url-shortener.log
+    }
+}
