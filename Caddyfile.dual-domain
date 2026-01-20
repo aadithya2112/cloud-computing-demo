@@ -1,0 +1,15 @@
+# Domain 1: Frontend (e.g., test.aadithya.dev)
+frontend.yourdomain.com {
+    root * /var/www/url-shortener/frontend/dist
+    encode gzip
+    file_server
+    try_files {path} /index.html
+}
+
+# Domain 2: Backend (e.g., api.aadithya.dev)
+backend.yourdomain.com {
+    reverse_proxy localhost:3000
+
+    # Optional: CORS handling is done in Express, but can be done here too.
+    # header Access-Control-Allow-Origin "*"
+}
